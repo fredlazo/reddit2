@@ -1,9 +1,17 @@
 require 'faker'
 
+15.times do
+  Topic.create!(
+    name:         Faker::Lorem.sentence,
+    description:  Faker::Lorem.paragraph
+  )
+end
+topics = Topic.all
+
+
 50.times do
-# #1
   Post.create!(
-# #2
+    topic: topics.sample,
     title:  Faker::Lorem.sentence,
     body:   Faker::Lorem.paragraph
   )
@@ -32,6 +40,7 @@ end
 advertisements = Advertisement.all
 
 puts "Seed finished"
+ puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
 puts "#{Advertisement.count} ads created"

@@ -13,6 +13,7 @@ source 'https://rubygems.org'
  # #2
  group :development do
    gem 'sqlite3'
+   gem 'pry-rails'
  end
 
  gem 'bootstrap-sass'
@@ -25,8 +26,8 @@ source 'https://rubygems.org'
 
  gem 'faker'
 
- gem 'stripe'	
- 
+ gem 'stripe'
+
  gem 'redcarpet'
 
  # Use SCSS for stylesheets

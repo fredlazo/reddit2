@@ -13,7 +13,19 @@
       <li><%= link_to "Reddit2", root_path %></li>
       <li><%= link_to "Topics", topics_path %></li>
       <li><%= link_to "Ads", advertisements_path %></li>
+      <div class="pull-right user-info">
+        <% if user_signed_in? %>
+          Signed in as: <strong><%= current_user.username %></strong> |
+          <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> - <%= link_to "Sign Out", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+        <% else %>
+          <%= link_to "Sign Up", new_user_registration_path, :class => 'navbar-link'  %> -
+          <%= link_to "Sign In", new_user_session_path, :class => 'navbar-link'  %>
+        <% end %>
+      </div>
     </ul>
+
+
+
 
     <% if flash[:notice] %>
       <div class="alert alert-success">
@@ -31,6 +43,8 @@
         <%= flash[:alert] %>
       </div>
     <% end %>
+
+
 
 <%= yield %>
   </div>

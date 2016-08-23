@@ -1,5 +1,21 @@
 require 'faker'
 
+user = User.create!(
+  email: 'fredlazo@yahoo.com', # replace this with your personal email
+  username: 'fredlazo',
+  password: 'password'
+)
+
+10.times do
+  User.create!(
+
+  username: Faker::Pokemon.name,
+  email:    Faker::Internet.email,
+  password: "password"
+  )
+end
+users = User.all
+
 15.times do
   Topic.create!(
     name:         Faker::Lorem.sentence,
@@ -11,6 +27,7 @@ topics = Topic.all
 
 50.times do
   Post.create!(
+    user: users.sample,
     topic: topics.sample,
     title:  Faker::Lorem.sentence,
     body:   Faker::Lorem.paragraph
@@ -39,8 +56,11 @@ end
 end
 advertisements = Advertisement.all
 
+
+
 puts "Seed finished"
- puts "#{Topic.count} topics created"
+puts "#{User.count} users created"
+puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
 puts "#{Advertisement.count} ads created"

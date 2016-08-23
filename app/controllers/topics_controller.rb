@@ -13,9 +13,7 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @topic = Topic.new
-    @topic.name = params[:topic][:name]
-    @topic.description = params[:topic][:description]
+    @topic = Topic.new(topic_params)
 
     if @topic.save
       flash[:notice] = "Success"
@@ -31,9 +29,7 @@ class TopicsController < ApplicationController
   end
 
   def update
-    @topic = Topic.find(params[:id])
-    @topic.name = params[:topic][:name]
-    @topic.description = params[:topic][:description]
+    @topic = Topic.assign_attributes(topic_params)
 
     if @topic.save
       flash[:notice] = "Success"
@@ -55,4 +51,12 @@ class TopicsController < ApplicationController
       render :show
     end
   end
+
+  private
+
+  def topic_params
+    params.require(:topic).permit(:name, :description, :public)
+  end
+
+
 end

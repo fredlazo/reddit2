@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817070729) do
+ActiveRecord::Schema.define(version: 20160823200137) do
 
   create_table "advertisements", force: :cascade do |t|
     t.string   "title"
@@ -47,7 +47,10 @@ ActiveRecord::Schema.define(version: 20160817070729) do
     t.boolean  "public",      default: true
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "user_id"
   end
+
+  add_index "topics", ["user_id"], name: "index_topics_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -67,6 +70,7 @@ ActiveRecord::Schema.define(version: 20160817070729) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "username"
+    t.integer  "role"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

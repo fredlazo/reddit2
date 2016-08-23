@@ -1,4 +1,4 @@
-<%= params %>
+
 
 <h1>
   <%= @post.title %><br>
@@ -10,8 +10,10 @@
     <div class="col-md-8">
       <%= @post.body %>
     </div>
-    <div class="col-md-4">
-      <%= link_to "Edit", edit_topic_post_path(@post.topic, @post), class: 'btn btn-success' %>
-      <%= link_to "Delete", [@post.topic, @post], method: :delete, class: 'btn btn-danger' %>
-    </div>
+    <% if user_is_authorized_for_post?(@post) %>
+      <div class="col-md-4">
+          <%= link_to "Edit", edit_topic_post_path(@post.topic, @post), class: 'btn btn-success' %>
+          <%= link_to "Delete", [@post.topic, @post], method: :delete, class: 'btn btn-danger' %>
+      </div>
+    <% end %>
   </div>

@@ -5,4 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   has_many :posts
+  has_many :topics
+
+  before_save {role ||= :member}
+
+  enum role: [:member, :admin]
 end

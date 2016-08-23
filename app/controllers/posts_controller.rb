@@ -30,11 +30,13 @@ class PostsController < ApplicationController
   def edit
     @topic = Topic.find(params[:topic_id])
     @post = Post.find(params[:id])
+    authorize @post
   end
 
   def update
     @post = Post.find(params[:id])
     @post.assign_attributes(post_params)
+    authorize @post
 
     if @post.save
       flash[:notice] = "Success"
@@ -47,6 +49,8 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
+    authorize @post
+
 
     if @post.destroy
       flash[:notice] = "Success"
@@ -63,9 +67,5 @@ private
 def post_params
   params.require(:post).permit(:body, :title)
 end
-
-
-
-
 
 end

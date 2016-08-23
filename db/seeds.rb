@@ -18,6 +18,7 @@ users = User.all
 
 15.times do
   Topic.create!(
+    user: users.sample,
     name:         Faker::Lorem.sentence,
     description:  Faker::Lorem.paragraph
   )

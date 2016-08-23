@@ -1,20 +1,26 @@
 class TopicsController < ApplicationController
 
+  before_action :require_sign_in, except: [:index, :show]
+
   def index
     @topics = Topic.all
   end
 
   def show
     @topic = Topic.find(params[:id])
+    #To show only the user posts
+    #@topic.posts = policy_scope(Post)
   end
 
   def new
     @topic = Topic.new
+    authorize @topic
+
   end
 
   def create
     @topic = Topic.new(topic_params)
-
+    authorize @topic
     if @topic.save
       flash[:notice] = "Success"
       redirect_to topics_path
@@ -26,10 +32,14 @@ class TopicsController < ApplicationController
 
   def edit
     @topic = Topic.find(params[:id])
+    authorize @topic
+
   end
 
   def update
-    @topic = Topic.assign_attributes(topic_params)
+    @topic = Topic.find(params[:id])
+    @topic.assign_attributes(topic_params)
+    authorize @topic
 
     if @topic.save
       flash[:notice] = "Success"
@@ -42,6 +52,7 @@ class TopicsController < ApplicationController
 
   def destroy
     @topic = Topic.find(params[:id])
+    authorize @topic
 
     if @topic.destroy
       flash[:notice] = "Success"

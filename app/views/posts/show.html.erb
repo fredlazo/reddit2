@@ -1,4 +1,4 @@
-
+<%= params %>
 
 <h1>
   <%= @post.title %><br>
@@ -9,6 +9,13 @@
   <div class="row">
     <div class="col-md-8">
       <%= @post.body %>
+      <div>
+        <h3>Comments</h3>
+        <%= render @post.comments %>
+      </div>
+      <% if current_user %>
+        <%= render 'comments/form', comment: Comment.new, post: @post %>
+      <% end %>
     </div>
     <% if user_is_authorized_for_post?(@post) %>
       <div class="col-md-4">

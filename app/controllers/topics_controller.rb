@@ -19,9 +19,9 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @topic = Topic.new(topic_params)
-    authorize @topic
-    if @topic.save
+    topic = Topic.new(topic_params)
+    authorize topic
+    if topic.save
       flash[:notice] = "Success"
       redirect_to topics_path
     else
@@ -37,13 +37,13 @@ class TopicsController < ApplicationController
   end
 
   def update
-    @topic = Topic.find(params[:id])
-    @topic.assign_attributes(topic_params)
-    authorize @topic
+    topic = Topic.find(params[:id])
+    topic.assign_attributes(topic_params)
+    authorize topic
 
-    if @topic.save
+    if topic.save
       flash[:notice] = "Success"
-      redirect_to @topic
+      redirect_to topic
     else
       flash.now[:alert] = "Fail"
       render :edit
@@ -51,10 +51,10 @@ class TopicsController < ApplicationController
   end
 
   def destroy
-    @topic = Topic.find(params[:id])
-    authorize @topic
+    topic = Topic.find(params[:id])
+    authorize topic
 
-    if @topic.destroy
+    if topic.destroy
       flash[:notice] = "Success"
       redirect_to topics_path
     else

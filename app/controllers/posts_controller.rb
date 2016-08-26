@@ -24,6 +24,7 @@ class PostsController < ApplicationController
     else
       flash.now[:alert] = "Fail!"
       render :new
+      #redirect_to new_topic_post_path
     end
   end
 
@@ -34,13 +35,13 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
-    @post.assign_attributes(post_params)
-    authorize @post
+    post = Post.find(params[:id])
+    post.assign_attributes(post_params)
+    authorize post
 
-    if @post.save
+    if post.save
       flash[:notice] = "Success"
-      redirect_to [@post.topic, @post]
+      redirect_to [post.topic, post]
     else
       flash.now[:alert] = "Fail!"
       render :edit
@@ -48,13 +49,13 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
-    authorize @post
+    post = Post.find(params[:id])
+    authorize post
 
 
-    if @post.destroy
+    if post.destroy
       flash[:notice] = "Success"
-      redirect_to @post.topic
+      redirect_to post.topic
     else
       flash.now[:alert] = "Fail!"
       render :show

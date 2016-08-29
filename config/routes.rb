@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   devise_for :users,  :controllers => { registrations: 'registrations' }
 
+  resources :labels, only: [:show]
 
   resources :topics do
     resources :posts, except: [:index]

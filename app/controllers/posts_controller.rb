@@ -19,6 +19,7 @@ class PostsController < ApplicationController
     @post.user = current_user
 
     if @post.save
+      @post.labels = Label.update_labels(params[:post][:labels])
       flash[:notice] = "Success"
       redirect_to [@topic, @post]
     else
@@ -40,6 +41,7 @@ class PostsController < ApplicationController
     authorize post
 
     if post.save
+      post.labels = Label.update_labels(params[:post][:labels])      
       flash[:notice] = "Success"
       redirect_to [post.topic, post]
     else

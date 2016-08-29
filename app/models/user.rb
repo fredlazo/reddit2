@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :topics
   has_many :comments
-  
+
 
   before_save {role ||= :member}
 

@@ -7,6 +7,7 @@ class TopicsController < ApplicationController
   end
 
   def show
+
     @topic = Topic.find(params[:id])
     #To show only the user posts
     #@topic.posts = policy_scope(Post)
@@ -19,11 +20,12 @@ class TopicsController < ApplicationController
   end
 
   def create
-    topic = Topic.new(topic_params)
-    authorize topic
-    if topic.save
+    @topic = Topic.new(topic_params)
+    authorize @topic
+    if @topic.save
+      @topic.labels = Label.update_labels(params[:topic][:labels])
       flash[:notice] = "Success"
-      redirect_to topics_path
+      redirect_to @topic
     else
       flash.now[:alert] = "Fail"
       render :new
@@ -37,13 +39,14 @@ class TopicsController < ApplicationController
   end
 
   def update
-    topic = Topic.find(params[:id])
-    topic.assign_attributes(topic_params)
-    authorize topic
+    @topic = Topic.find(params[:id])
+    @topic.assign_attributes(topic_params)
+    authorize @topic
 
-    if topic.save
+    if @topic.save
+      @topic.labels = Label.update_labels(params[:topic][:labels])
       flash[:notice] = "Success"
-      redirect_to topic
+      redirect_to @topic
     else
       flash.now[:alert] = "Fail"
       render :edit
